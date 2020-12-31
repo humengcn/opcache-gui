@@ -1,7 +1,6 @@
 <?php
-
 /**
- * OPcache GUI - build script
+ * OPcache GUI - build module
  *
  * @author Andrew Collington, andy@amnuts.com
  * @version 3.0.0
