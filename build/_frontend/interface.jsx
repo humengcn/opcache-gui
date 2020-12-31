@@ -17,7 +17,7 @@ class Interface extends React.Component {
         this.setState({realtime: true})
         this.polling = setInterval(() => {
             this.setState({fetching: true, resetting: false});
-            axios.get(window.location.pathname, {time: Date.now()})
+            axios.get('?', {time: Date.now()})
                 .then((response) => {
                     this.setState({opstate: response.data});
                 });
@@ -43,7 +43,7 @@ class Interface extends React.Component {
     resetHandler = () => {
         if (this.state.realtime) {
             this.setState({resetting: true});
-            axios.get(window.location.pathname, {params: {reset: 1}})
+            axios.get('?', {params: {reset: 1}})
                 .then((response) => {
                     console.log('success: ', response.data);
                 });
@@ -329,16 +329,6 @@ function GeneralInfo(props) {
 
 
 function Directives(props) {
-    let directiveList = (directive) => {
-        return (
-            <ul className="directive-list">{
-                directive.v.map((item, key) => {
-                    return <li key={key}>{item}</li>
-                })
-            }</ul>
-        );
-    };
-
     let directiveNodes = props.directives.map(function(directive) {
         let map = { 'opcache.':'', '_':' ' };
         let dShow = directive.k.replace(/opcache\.|_/gi, function(matched){
@@ -351,7 +341,9 @@ function Directives(props) {
             vShow = React.createElement('i', {}, 'no value');
         } else {
             if (Array.isArray(directive.v)) {
-                vShow = directiveList(directive);
+                vShow = directive.v.map((item, key) => {
+                    return <span key={key}>{item}<br/></span>
+                });
             } else {
                 vShow = directive.v;
             }
@@ -685,7 +677,7 @@ class CachedFiles extends React.Component {
     handleInvalidate = e => {
         e.preventDefault();
         if (this.props.realtime) {
-            axios.get(window.location.pathname, {params: { invalidate_searched: this.state.searchTerm }})
+            axios.get('?', {params: { invalidate_searched: this.state.searchTerm }})
                 .then((response) => {
                     console.log('success: ' , response.data);
                 });
@@ -807,7 +799,7 @@ class CachedFile extends React.Component {
     handleInvalidate = e => {
         e.preventDefault();
         if (this.props.realtime) {
-            axios.get(window.location.pathname, {params: { invalidate: e.currentTarget.getAttribute('data-file') }})
+            axios.get('?', {params: { invalidate: e.currentTarget.getAttribute('data-file') }})
                 .then((response) => {
                     console.log('success: ' , response.data);
                 });
