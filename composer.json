@@ -22,14 +22,12 @@
   },
   "require": {
     "ext-Zend-OPcache": "*",
-    "php": ">=7.1.0"
+    "php": ">=5.4"
   },
   "autoload": {
     "psr-4" : {
-      "Amnuts\\" : "src/"
+      "OpcacheGui\\" : "/"
     }
-  },
-  "scripts": {
-    "build": "php build/build.php"
   }
 }
+
